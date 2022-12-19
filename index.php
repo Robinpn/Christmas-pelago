@@ -1,31 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="styles/styles.css">
-<title>Christmas Pelago</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
+    <title>Christmas Pelago</title>
 </head>
+
 <body>
 
-<div class="body-wrapper">
+    <div class="body-wrapper">
 
- <header>
-  <nav></nav>
-  <h1>
-   Christmas-Pelago
-  </h1>
- </header>
+        <header>
+            <nav></nav>
+            <h1>
+                Christmas-Pelago
+            </h1>
+        </header>
 
- <section></section>
+        <section class="hotel-info-section">
+            <h2>
+                About hotel
+            </h2>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla laborum iste assumenda aspernatur ratione nihil eos explicabo saepe temporibus fugiat molestiae commodi, consequuntur numquam dolores praesentium architecto corrupti rem. Nulla?
+                Doloremque inventore dolores pariatur cumque, porro exercitationem! Cumque harum praesentium animi optio veritatis aperiam temporibus soluta? Ullam possimus quasi eum in necessitatibus praesentium, est cupiditate modi voluptatem, vitae reprehenderit ipsa.
+                Doloribus obcaecati voluptas necessitatibus modi, molestiae accusantium perferendis sed saepe in est accusamus nobis iusto iure, animi quibusdam assumenda unde blanditiis, nisi eveniet beatae culpa itaque! Deleniti modi officia sed?
+            </p>
+        </section>
 
- <section></section>
+        <section class="picture-section">
+            <div class="grid-container">
+                <div class="grid-item">
+                    <img src="" alt="">
+                </div>
+                <div class="grid-item">
+                    <img src="" alt="">
+                </div>
+                <div class="grid-item">
+                    <img src="" alt="">
+                </div>
+            </div>
+        </section>
 
- <section></section>
+        <section></section>
 
- <footer></footer>
-</div>
+        <footer></footer>
+    </div>
 </body>
 
 
