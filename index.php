@@ -34,12 +34,21 @@
         <section class="picture-section">
             <div class="grid-container">
                 <div class="grid-item">
+                    <p>
+                        Cheap option
+                    </p>
                     <img src="" alt="">
                 </div>
                 <div class="grid-item">
+                    <p>
+                        Middle option
+                    </p>
                     <img src="" alt="">
                 </div>
                 <div class="grid-item">
+                    <p>
+                        Expensive option
+                    </p>
                     <img src="" alt="">
                 </div>
             </div>
