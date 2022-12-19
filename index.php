@@ -35,26 +35,66 @@
             <div class="grid-container">
                 <div class="grid-item">
                     <p>
-                        Cheap option
+                        Budget
                     </p>
                     <img src="" alt="">
                 </div>
                 <div class="grid-item">
                     <p>
-                        Middle option
+                        Standard
                     </p>
                     <img src="" alt="">
                 </div>
                 <div class="grid-item">
                     <p>
-                        Expensive option
+                        Luxury
                     </p>
                     <img src="" alt="">
                 </div>
             </div>
         </section>
 
-        <section></section>
+        <section class="calendar-section">
+
+        </section>
+
+        <section class="option-selection">
+           <div class="form-container">
+                    <form action="/index.php" method="post">
+                           <div class="form-wrapper">
+                           <label for="name">Name</label>
+                           <input type="text" name="name" placeholder="John Doe">
+
+                           <div class="select-box">
+                           <select name="room-options" id="room-options">
+                             <option value="Budget">Budget</option>
+                             <option value="Standard">Standard</option>
+                             <option value="Luxury">luxury</option>
+                           </select>
+                           <input type="submit">
+                           </div>
+                           </div>
+
+                           <div class="checkbox-container">
+                                 <div>
+                                        <input type="checkbox" name="breakfast">
+                                        <label for="breakfast">breakfast</label>
+                                 </div>
+
+                                 <div>
+                                        <input type="checkbox" name="ocean-view">
+                                        <label for="ocean-view">ocean-view</label>
+                                 </div>
+
+                                 <div>
+                                        <input type="checkbox" name="room-service">
+                                        <label for="room-service">room-service</label>
+                                 </div>
+                           </div>
+
+                    </form>
+           </div>
+        </section>
 
         <footer></footer>
     </div>
