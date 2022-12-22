@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" type="text/css" href="styles/calendar.css">
+    <script src="scripts/scripts.js" defer></script>
     <title>Christmas Pelago</title>
 </head>
 
