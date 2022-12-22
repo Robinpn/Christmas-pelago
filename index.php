@@ -1,3 +1,9 @@
+<?php
+  require 'vendor/autoload.php';
+  use benhall14\phpCalendar\Calendar as Calendar;
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/calendar.css">
     <title>Christmas Pelago</title>
 </head>
 
@@ -55,7 +62,14 @@
         </section>
 
         <section class="calendar-section">
+           <?php
+              $calendar = new calendar;
+              $calendar->stylesheet();
 
+//               (new calendar)->display();
+                    echo $calendar->draw(date('Y-01-01'));
+
+           ?>
         </section>
 
         <section class="option-selection">
