@@ -75,13 +75,26 @@ header {
 form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 40px;
 }
+
 
 .form-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
+  background-color: green;
+}
+
+.select-box {
+  background-color: red;
+  width: 100%;
+  height: 100%;
+}
+
+.checkbox-container {
+  background-color: darkcyan;
 }
 
 input[type=text] {
