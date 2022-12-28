@@ -1,6 +1,7 @@
+const form = document.querySelector('form');
+const input = document.querySelector('input');
 
-const form = document.querySelector("form");
-
-form.addEventListener("click", (e) => {
+/* form.addEventListener('click', (e) => {
   e.preventDefault();
-})
+   input.value = '';
+}); */
