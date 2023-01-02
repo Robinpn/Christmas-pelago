@@ -1,5 +1,7 @@
 <?php
 require 'vendor/autoload.php';
+require 'functions.php';
+
 
 use benhall14\phpCalendar\Calendar as Calendar;
 ?>
@@ -8,22 +10,85 @@ use benhall14\phpCalendar\Calendar as Calendar;
 
 $db = new PDO('sqlite:pelago.db');
 
-if (isset($_POST['first-name'], $_POST['last-name'], $_POST['room-options']) && $_POST['room-options'] === "Budget") {
+if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['submit'] /* $_POST['breakfast'], $_POST['ocean-view'], $_POST['room-service'], $_POST['options'] */)) {
     $firstName = trim(htmlspecialchars($_POST['first-name']));
     $lastName = trim(htmlspecialchars($_POST['last-name']));
-    $budget = $_POST['room-options'] === "Budget";
-    $budget = "Budget";
+    $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+    $options = implode(',', $_POST['options']);
 
-    $query = 'INSERT INTO Visitors (first_name, last_name, room_type) VALUES (:first_name, :last_name, :room_type)';
 
-    $statement = $db->prepare($query);
 
-    $statement->bindParam(':first_name', $firstName, PDO::PARAM_STR);
-    $statement->bindParam(':last_name', $lastName, PDO::PARAM_STR);
-    $statement->bindParam(':room_type', $budget, PDO::PARAM_STR);
+    switch ($options) {
+        case 'breakfast':
+            $breakfast = 5;
+            break;
+        case 'ocean-view':
+            $oceanView = 10;
+            break;
+        case 'room-service':
+            $roomService = 15;
+            break;
+    }
 
-    $statement->execute();
+
+    /*     foreach ($options as $option) {
+        if ($option === $_POST['options']) {
+            $option = 1;
+            echo $option;
+        } else {
+            $options = 0;
+            echo $option;
+        } */
+
+
+
+    if (!empty($_POST['room-options'])) {
+        $selected = $_POST['room-options'];
+
+        $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, room_add_ons) VALUES (:first_name, :last_name, :room_type, :mail, :room_add_ons)';
+
+        $statement = $db->prepare($query);
+
+        $statement->bindParam(':first_name', $firstName, PDO::PARAM_STR);
+        $statement->bindParam(':last_name', $lastName, PDO::PARAM_STR);
+        $statement->bindParam(':mail', $email, PDO::PARAM_STR);
+        $statement->bindParam(':room_type', $selected, PDO::PARAM_STR);
+        $statement->bindParam(':room_add_ons', $options, PDO::PARAM_STR);
+        /*         $statement->bindParam(':ocean_view', $options, PDO::PARAM_STR);
+        $statement->bindParam(':room_service', $options, PDO::PARAM_STR); */
+
+        $statement->execute();
+
+        switch ($selected) {
+            case 'Budget':
+                $budget = 3;
+                break;
+            case 'Standard':
+                $standard = 5;
+                break;
+            case 'Luxury':
+                $luxury = 50;
+                break;
+        }
+
+        echo $breakfast;
+        echo $oceanView;
+
+
+        /* echo calcPrice($budget, $breakfast, $oceanView); */
+    }
 }
+
+
+/* if (isset($_POST['submit'])) {
+    if (!empty($_POST['room-options'])) {
+        $selected = $_POST['room-options'];
+        echo 'you have chosen' . $selected;
+    } else {
+        echo 'something went wrong there buddy!';
+    }
+} */
+
 
 ?>
 
@@ -107,33 +172,35 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['room-options']) && 
                         <input type="text" name="first-name" placeholder="John Doe">
                         <label for="last-name">last-name</label>
                         <input type="text" name="last-name" placeholder="John Doe">
+                        <label for="email">email</label>
+                        <input type="email" name="email" required>
                         <div class="select-box">
                             <select name="room-options" id="room-options">
                                 <option value="Budget">Budget</option>
                                 <option value="Standard">Standard</option>
                                 <option value="Luxury">luxury</option>
                             </select>
-                            <input type="submit">
                         </div>
                     </div>
 
                     <div class="checkbox-container">
                         <div>
-                            <input type="checkbox" name="breakfast">
+                            <input type="checkbox" name="options[]" value="breakfast">
                             <label for="breakfast">breakfast</label>
                         </div>
 
                         <div>
-                            <input type="checkbox" name="ocean-view">
+                            <input type="checkbox" name="options[]" value="ocean-view">
                             <label for="ocean-view">ocean-view</label>
                         </div>
 
                         <div>
-                            <input type="checkbox" name="room-service">
+                            <input type="checkbox" name="options[]" value="room-service">
                             <label for="room-service">room-service</label>
                         </div>
                     </div>
-
+                    <button type="submit" name="submit">Choose options</button>
+                    <!--                     <input type="submit" name="submit" value="choose options"> -->
                 </form>
             </div>
         </section>
