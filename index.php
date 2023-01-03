@@ -10,11 +10,17 @@ use benhall14\phpCalendar\Calendar as Calendar;
 
 $db = new PDO('sqlite:pelago.db');
 
+$smt = $db->prepare('SELECT room_choice FROM rooms');
+$smt->execute();
+$data = $smt->fetchAll();
+
 if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['submit'] /* $_POST['breakfast'], $_POST['ocean-view'], $_POST['room-service'], $_POST['options'] */)) {
     $firstName = trim(htmlspecialchars($_POST['first-name']));
     $lastName = trim(htmlspecialchars($_POST['last-name']));
     $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
     $options = implode(',', $_POST['options']);
+    $arrival = trim(htmlspecialchars($_POST['arrival-date']));
+    $departure = trim(htmlspecialchars($_POST['departure-date']));
 
 
 
@@ -33,7 +39,7 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
     if (!empty($_POST['room-options'])) {
         $selected = $_POST['room-options'];
 
-        $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, room_add_ons) VALUES (:first_name, :last_name, :room_type, :mail, :room_add_ons)';
+        $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, arrival_date, departure_date, room_add_ons) VALUES (:first_name, :last_name, :room_type, :mail, :arrival_date, :departure_date, :room_add_ons)';
 
         $statement = $db->prepare($query);
 
@@ -41,13 +47,15 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
         $statement->bindParam(':last_name', $lastName, PDO::PARAM_STR);
         $statement->bindParam(':mail', $email, PDO::PARAM_STR);
         $statement->bindParam(':room_type', $selected, PDO::PARAM_STR);
+        $statement->bindParam(':arrival_date', $arrival, PDO::PARAM_STR);
+        $statement->bindParam(':departure_date', $departure, PDO::PARAM_STR);
         $statement->bindParam(':room_add_ons', $options, PDO::PARAM_STR);
         /*         $statement->bindParam(':ocean_view', $options, PDO::PARAM_STR);
         $statement->bindParam(':room_service', $options, PDO::PARAM_STR); */
 
         $statement->execute();
 
-        switch ($selected) {
+        /*         switch ($selected) {
             case 'Budget':
                 $budget = 3;
                 break;
@@ -69,7 +77,7 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
             case 'room-service':
                 $roomService = 15;
                 break;
-        }
+        } */
 
 
 
@@ -156,9 +164,18 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
             $calendar = new calendar;
             $calendar->stylesheet();
 
-            //               (new calendar)->display();
+            $events = array();
+            $events[] = array(
+                'start' => '2023-01-05',
+                'end' => '2023-01-07',
+                'mask' => true
+            );
+
+            $calendar->addEvents($events);
+
             echo $calendar->draw(date('Y-01-01'));
 
+            print_r($events);
             ?>
         </section>
 
@@ -174,12 +191,19 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
                         <input type="email" name="email" required>
                         <div class="select-box">
                             <select name="room-options" id="room-options">
-                                <option value="Budget">Budget</option>
+                                <?php foreach ($data as $row) : ?>
+                                    <option value="<?php echo $row['room_choice']; ?>"><?php echo $row['room_choice']; ?></option>
+                                <?php endforeach ?>
+
+
+                                <!--                                 <option value="Budget">Budget</option>
                                 <option value="Standard">Standard</option>
-                                <option value="Luxury">luxury</option>
+                                <option value="Luxury">luxury</option> -->
                             </select>
                         </div>
                     </div>
+                    <input type="text" name="arrival-date" placeholder="arrival-date(Y-M-D)">
+                    <input type="text" name="departure-date" placeholder="departure-date((Y-M-D))">
 
                     <div class="checkbox-container">
                         <div>
