@@ -18,18 +18,6 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
 
 
 
-    switch ($options) {
-        case 'breakfast':
-            $breakfast = 5;
-            break;
-        case 'ocean-view':
-            $oceanView = 10;
-            break;
-        case 'room-service':
-            $roomService = 15;
-            break;
-    }
-
 
     /*     foreach ($options as $option) {
         if ($option === $_POST['options']) {
@@ -71,11 +59,21 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
                 break;
         }
 
-        echo $breakfast;
-        echo $oceanView;
+        switch ($options) {
+            case 'breakfast':
+                $breakfast = 5;
+                break;
+            case 'ocean-view':
+                $oceanView = 10;
+                break;
+            case 'room-service':
+                $roomService = 15;
+                break;
+        }
 
 
-        /* echo calcPrice($budget, $breakfast, $oceanView); */
+
+        /* echo calcPrice($selected, $options); */
     }
 }
 
