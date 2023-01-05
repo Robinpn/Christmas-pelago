@@ -1,6 +1,8 @@
 <?php
 require 'vendor/autoload.php';
 require 'functions.php';
+//the narrow haven
+
 
 
 use benhall14\phpCalendar\Calendar as Calendar;
@@ -96,6 +98,15 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
 } */
 
 
+$cost = $db->prepare('SELECT price FROM rooms');
+$cost->execute();
+$dbData = $cost->fetchAll();
+
+foreach ($dbData as $roomPrice) {
+    echo $roomPrice['price'];
+}
+
+
 ?>
 
 
@@ -113,8 +124,6 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
 </head>
 
 <body>
-
-
 
     <div class="body-wrapper">
 
@@ -164,18 +173,22 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
             $calendar = new calendar;
             $calendar->stylesheet();
 
-            $events = array();
-            $events[] = array(
-                'start' => '2023-01-05',
-                'end' => '2023-01-07',
-                'mask' => true
-            );
+            if (isset($_POST['submit'])) {
+                $start = trim(htmlspecialchars($_POST['arrival-date']));
+                $end = trim(htmlspecialchars($_POST['departure-date']));
 
-            $calendar->addEvents($events);
+                $events = array();
+                $events[] = array(
+                    'start' => "{$start}",
+                    'end' => "{$end}",
+                    'mask' => true
+                );
+
+                $calendar->addEvents($events);
+            }
 
             echo $calendar->draw(date('Y-01-01'));
 
-            print_r($events);
             ?>
         </section>
 
