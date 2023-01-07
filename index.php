@@ -11,8 +11,7 @@ use benhall14\phpCalendar\Calendar as Calendar;
 <?php
 
 $db = new PDO('sqlite:pelago.db');
-
-$smt = $db->prepare('SELECT room_choice FROM rooms');
+$smt = $db->prepare('SELECT * FROM rooms');
 $smt->execute();
 $data = $smt->fetchAll();
 
@@ -37,11 +36,31 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
         } */
 
 
+    foreach ($data as $price) {
+        $amount = $price['price'];
+
+        /* echo $amount; */
+    }
+
+    switch ($amount) {
+        case 'budget':
+            $amount = 5;
+            break;
+        case 'standard':
+            $amount = 10;
+            break;
+        case 'luxury':
+            $amount = 10;
+            break;
+    }
+
+    echo $amount;
 
     if (!empty($_POST['room-options'])) {
         $selected = $_POST['room-options'];
 
-        $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, arrival_date, departure_date, room_add_ons) VALUES (:first_name, :last_name, :room_type, :mail, :arrival_date, :departure_date, :room_add_ons)';
+
+        $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, arrival_date, departure_date, room_add_ons, total_price) VALUES (:first_name, :last_name, :room_type, :mail, :arrival_date, :departure_date, :room_add_ons, :total_price)';
 
         $statement = $db->prepare($query);
 
@@ -52,6 +71,7 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
         $statement->bindParam(':arrival_date', $arrival, PDO::PARAM_STR);
         $statement->bindParam(':departure_date', $departure, PDO::PARAM_STR);
         $statement->bindParam(':room_add_ons', $options, PDO::PARAM_STR);
+        $statement->bindParam(':total_price', $amount, PDO::PARAM_STR);
         /*         $statement->bindParam(':ocean_view', $options, PDO::PARAM_STR);
         $statement->bindParam(':room_service', $options, PDO::PARAM_STR); */
 
@@ -98,13 +118,13 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
 } */
 
 
-$cost = $db->prepare('SELECT price FROM rooms');
+/* $cost = $db->prepare('SELECT * FROM rooms');
 $cost->execute();
 $dbData = $cost->fetchAll();
 
 foreach ($dbData as $roomPrice) {
-    echo $roomPrice['price'];
-}
+    echo $roomPrice['room_choice'] . " " . $roomPrice['price'];
+} */
 
 
 ?>
@@ -149,19 +169,19 @@ foreach ($dbData as $roomPrice) {
             <div class="grid-container">
                 <div class="grid-item">
                     <p>
-                        Budget
+                        Budget 5$
                     </p>
                     <img src="" alt="">
                 </div>
                 <div class="grid-item">
                     <p>
-                        Standard
+                        Standard 10$
                     </p>
                     <img src="" alt="">
                 </div>
                 <div class="grid-item">
                     <p>
-                        Luxury
+                        Luxury 15$
                     </p>
                     <img src="" alt="">
                 </div>
@@ -204,9 +224,10 @@ foreach ($dbData as $roomPrice) {
                         <input type="email" name="email" required>
                         <div class="select-box">
                             <select name="room-options" id="room-options">
-                                <?php foreach ($data as $row) : ?>
-                                    <option value="<?php echo $row['room_choice']; ?>"><?php echo $row['room_choice']; ?></option>
-                                <?php endforeach ?>
+                                <option disabled selected value>Select a room!</option>
+                                <option value="budget">budget</option>
+                                <option value="standard">standard</option>
+                                <option value="luxury">luxury</option>
 
 
                                 <!--                                 <option value="Budget">Budget</option>
@@ -215,8 +236,8 @@ foreach ($dbData as $roomPrice) {
                             </select>
                         </div>
                     </div>
-                    <input type="text" name="arrival-date" placeholder="arrival-date(Y-M-D)">
-                    <input type="text" name="departure-date" placeholder="departure-date((Y-M-D))">
+                    <input type="date" name="arrival-date" id="arrival_date" min="2023-01-01" max="2023-01-31">
+                    <input type="date" name="departure-date" id="departure_date" min="2023-01-01" max="2023-01-31">
 
                     <div class="checkbox-container">
                         <div>
@@ -233,6 +254,11 @@ foreach ($dbData as $roomPrice) {
                             <input type="checkbox" name="options[]" value="room-service">
                             <label for="room-service">room-service</label>
                         </div>
+                    </div>
+
+                    <div id="amount">
+                        <label for="total-amount">Total Amount</label>
+                        <input name="amount" id="total-amount" type="text" readonly>
                     </div>
                     <button type="submit" name="submit">Choose options</button>
                     <!--                     <input type="submit" name="submit" value="choose options"> -->
