@@ -22,6 +22,7 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
     $options = implode(',', $_POST['options']);
     $arrival = trim(htmlspecialchars($_POST['arrival-date']));
     $departure = trim(htmlspecialchars($_POST['departure-date']));
+    $totalCost = $_POST['calculated-cost'];
 
 
 
@@ -71,7 +72,7 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
         $statement->bindParam(':arrival_date', $arrival, PDO::PARAM_STR);
         $statement->bindParam(':departure_date', $departure, PDO::PARAM_STR);
         $statement->bindParam(':room_add_ons', $options, PDO::PARAM_STR);
-        $statement->bindParam(':total_price', $amount, PDO::PARAM_STR);
+        $statement->bindParam(':total_price', $totalCost, PDO::PARAM_STR);
         /*         $statement->bindParam(':ocean_view', $options, PDO::PARAM_STR);
         $statement->bindParam(':room_service', $options, PDO::PARAM_STR); */
 
@@ -258,7 +259,7 @@ foreach ($dbData as $roomPrice) {
 
                     <div id="amount">
                         <label for="total-amount">Total Amount</label>
-                        <input name="amount" id="total-amount" type="text" readonly>
+                        <input name="calculated-cost" id="total-amount" type="text" readonly>
                     </div>
                     <button type="submit" name="submit">Choose options</button>
                     <!--                     <input type="submit" name="submit" value="choose options"> -->
