@@ -1,12 +1,20 @@
 <?php
 
-/* 
+declare(strict_types=1);
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
+
+/* $transferCode = '4a0dbf4c-c585-4d75-a9cf-b991f6ff74cc'; */
+
+/*
 Here's something to start your career as a hotel manager.
 
 One function to connect to the database you want (it will return a PDO object which you then can use.)
     For instance: $db = connect('hotel.db');
                   $db->prepare("SELECT * FROM bookings");
-                  
+
 one function to create a guid,
 and one function to control if a guid is valid.
 */
@@ -50,3 +58,29 @@ function isValidUuid(string $uuid): bool
     }
     return true;
 }
+
+function checkTransferCode($transferCode, $totalCost)
+{
+    if (!isValidUuid($transferCode)) {
+        echo "Not a valid Code!";
+    } else {
+
+
+        $client = new \GuzzleHttp\Client();
+        $options = [
+            'form_params' => [
+                'transferCode' => $transferCode,
+                'totalCost' => $totalCost
+            ]
+        ];
+
+        try {
+            $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', $options);
+            $response = $response->getBody()->getContents();
+            $response = json_decode($response, true);
+        } catch (\Exeption $e) {
+            return "something went wrong!" . $e;
+        }
+    }
+    return true;
+};

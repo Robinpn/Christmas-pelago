@@ -1,7 +1,10 @@
 <?php
 require 'vendor/autoload.php';
 require 'functions.php';
+require 'hotelFunctions.php';
 //the narrow haven
+
+/* $transferCode = '4a0dbf4c-c585-4d75-a9cf-b991f6ff74cc'; */
 
 
 
@@ -23,6 +26,7 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
     $arrival = trim(htmlspecialchars($_POST['arrival-date']));
     $departure = trim(htmlspecialchars($_POST['departure-date']));
     $totalCost = $_POST['calculated-cost'];
+    $transferCode = $_POST['transfer-code'];
 
 
 
@@ -54,8 +58,6 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
             $amount = 10;
             break;
     }
-
-    echo $amount;
 
     if (!empty($_POST['room-options'])) {
         $selected = $_POST['room-options'];
@@ -106,6 +108,8 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
 
         /* echo calcPrice($selected, $options); */
     }
+
+    checkTransferCode($transferCode, $totalCost);
 }
 
 
@@ -255,6 +259,10 @@ foreach ($dbData as $roomPrice) {
                             <input type="checkbox" name="options[]" value="room-service">
                             <label for="room-service">room-service</label>
                         </div>
+                    </div>
+
+                    <div id="transfer-code-container">
+                        <input type="text" name="transfer-code" placeholder="transfer code">
                     </div>
 
                     <div id="amount">
