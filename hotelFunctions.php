@@ -106,6 +106,21 @@ function addFunds($transferCode)
     }
 };
 
-function addLogBook()
+/* function addBookinToLogBook($arrival, $departure, $totalCost)
 {
-};
+    $content = [
+
+        'Island' => 'The Narrow Haven',
+        'Hotel' => 'The Narrow Haven Resort',
+        'Arrival_date' => $arrival,
+        'Departure_date' => $departure,
+        'Total_cost' => $totalCost,
+        'Stars' => '1',
+        'Features' => '',
+        'Additional_info' => ''
+    ];
+
+    $path = '/logbook.json';
+
+    file_put_contents(__DIR__ . $path, json_encode($content), FILE_APPEND);
+}; */
