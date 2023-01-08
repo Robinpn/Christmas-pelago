@@ -84,3 +84,28 @@ function checkTransferCode($transferCode, $totalCost)
     }
     return true;
 };
+
+function addFunds($transferCode)
+{
+
+    $client = new \GuzzleHttp\Client();
+    $options = [
+        'form_params' => [
+            'user' => 'Robin',
+            'transferCode' => $transferCode
+        ]
+    ];
+
+    try {
+        $response = $client->post('https://www.yrgopelago.se/centralbank/deposit', $options);
+        $response = $response->getBody()->getContents();
+        $response = json_decode($response, true);
+        return true;
+    } catch (\Exeption $e) {
+        return "money not transfered!" . $e;
+    }
+};
+
+function addLogBook()
+{
+};
