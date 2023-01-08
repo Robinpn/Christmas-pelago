@@ -111,6 +111,7 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
 
     checkTransferCode($transferCode, $totalCost);
     addFunds($transferCode);
+    /* addBookinToLogBook($arrival, $departure, $totalCost); */
 }
 
 
