@@ -1,7 +1,10 @@
 <?php
 
 declare(strict_types=1);
+require 'db.php';
+require 'vendor/autoload.php';
 
+use benhall14\phpCalendar\Calendar;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
@@ -124,3 +127,40 @@ function addFunds($transferCode)
 
     file_put_contents(__DIR__ . $path, json_encode($content), FILE_APPEND);
 }; */
+
+function showBookings($roomChoice)
+{
+    $db = new PDO('sqlite:pelago.db');
+
+    $calendar = new Calendar;
+
+    if ($roomChoice === "budget") {
+        $response = $db->query('SELECT arrival_date, departure_date FROM Visitors WHERE room_type = "budget"');
+        $response->execute();
+        $result = $response->fetchAll();
+        foreach ($result as $resp) {
+            $arrivalDate = $resp['arrival_date'];
+            $departureDate = $resp['departure_date'];
+        }
+        $calendar->addEvent($arrivalDate, $departureDate, '', true);
+    } else if ($roomChoice === "standard") {
+        $response = $db->query('SELECT arrival_date, departure_date FROM Visitors WHERE room_type = "standard"');
+        $response->execute();
+        $result = $response->fetchAll();
+        foreach ($result as $resp) {
+            $arrivalDate = $resp['arrival_date'];
+            $departureDate = $resp['departure_date'];
+        }
+        $calendar->addEvent($arrivalDate, $departureDate, '', true);
+    } else if ($roomChoice === "luxury") {
+        $response = $db->query('SELECT arrival_date, departure_date FROM Visitors WHERE room_type = "luxury"');
+        $response->execute();
+        $result = $response->fetchAll();
+        foreach ($result as $resp) {
+            $arrivalDate = $resp['arrival_date'];
+            $departureDate = $resp['departure_date'];
+        }
+        $calendar->addEvent($arrivalDate, $departureDate, '', true);
+    };
+    echo $calendar->display(date('Y-01-01'));
+};

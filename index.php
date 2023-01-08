@@ -29,18 +29,6 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
     $transferCode = $_POST['transfer-code'];
 
 
-
-
-    /*     foreach ($options as $option) {
-        if ($option === $_POST['options']) {
-            $option = 1;
-            echo $option;
-        } else {
-            $options = 0;
-            echo $option;
-        } */
-
-
     foreach ($data as $price) {
         $amount = $price['price'];
 
@@ -174,33 +162,36 @@ foreach ($dbData as $roomPrice) {
 
         <section class="picture-section">
             <div class="grid-container">
-                <div class="grid-item">
+                <div class="grid-item budget">
                     <p>
                         Budget 5$
                     </p>
-                    <img src="" alt="">
+                    <!-- <img src="images/budget.jpg" alt=""> -->
                 </div>
-                <div class="grid-item">
+                <div class="grid-item standard">
                     <p>
                         Standard 10$
                     </p>
-                    <img src="" alt="">
+                    <!-- <img src="images/standard.jpg" alt=""> -->
                 </div>
-                <div class="grid-item">
+                <div class="grid-item luxury">
                     <p>
                         Luxury 15$
                     </p>
-                    <img src="" alt="">
+                    <!--  <img src="images/luxury.jpg" alt=""> -->
                 </div>
             </div>
         </section>
 
-        <section class="calendar-section">
+        <section class="budget-section">
+            <h2>budget Room</h2>
             <?php
-            $calendar = new calendar;
-            $calendar->stylesheet();
 
-            if (isset($_POST['submit'])) {
+            showBookings('budget');
+            /*             $calendar = new calendar;
+            $calendar->stylesheet(); */
+
+            /* if (isset($_POST['submit'])) {
                 $start = trim(htmlspecialchars($_POST['arrival-date']));
                 $end = trim(htmlspecialchars($_POST['departure-date']));
 
@@ -212,11 +203,31 @@ foreach ($dbData as $roomPrice) {
                 );
 
                 $calendar->addEvents($events);
-            }
+            } */
 
-            echo $calendar->draw(date('Y-01-01'));
+            /* echo $calendar->draw(date('Y-01-01')); */
 
             ?>
+        </section>
+
+        <section class="standard-section">
+            <h2>Standard Room</h2>
+            <?php
+            /* echo $calendar->draw(date('Y-01-01')); */
+            ?>
+            <?php
+            showBookings('standard');
+            ?>
+        </section>
+
+        <section class="luxury-section">
+            <h2>Luxury Room</h2>
+            <?php
+            /* echo $calendar->draw(date('Y-01-01')); */
+            showBookings('luxury');
+            ?>
+
+
         </section>
 
         <section class="option-selection">
