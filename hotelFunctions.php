@@ -81,7 +81,7 @@ function checkTransferCode($transferCode, $totalCost)
             $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', $options);
             $response = $response->getBody()->getContents();
             $response = json_decode($response, true);
-        } catch (\Exeption $e) {
+        } catch (\Exception $e) {
             return "something went wrong!" . $e;
         }
     }
@@ -104,7 +104,7 @@ function addFunds($transferCode)
         $response = $response->getBody()->getContents();
         $response = json_decode($response, true);
         return true;
-    } catch (\Exeption $e) {
+    } catch (\Exception $e) {
         return "money not transfered!" . $e;
     }
 };
@@ -141,8 +141,8 @@ function showBookings($roomChoice)
         foreach ($result as $resp) {
             $arrivalDate = $resp['arrival_date'];
             $departureDate = $resp['departure_date'];
+            $calendar->addEvent($arrivalDate, $departureDate, '', true);
         }
-        $calendar->addEvent($arrivalDate, $departureDate, '', true);
     } else if ($roomChoice === "standard") {
         $response = $db->query('SELECT arrival_date, departure_date FROM Visitors WHERE room_type = "standard"');
         $response->execute();
@@ -150,8 +150,8 @@ function showBookings($roomChoice)
         foreach ($result as $resp) {
             $arrivalDate = $resp['arrival_date'];
             $departureDate = $resp['departure_date'];
+            $calendar->addEvent($arrivalDate, $departureDate, '', true);
         }
-        $calendar->addEvent($arrivalDate, $departureDate, '', true);
     } else if ($roomChoice === "luxury") {
         $response = $db->query('SELECT arrival_date, departure_date FROM Visitors WHERE room_type = "luxury"');
         $response->execute();
@@ -159,8 +159,10 @@ function showBookings($roomChoice)
         foreach ($result as $resp) {
             $arrivalDate = $resp['arrival_date'];
             $departureDate = $resp['departure_date'];
+            $calendar->addEvent($arrivalDate, $departureDate, '', true);
         }
-        $calendar->addEvent($arrivalDate, $departureDate, '', true);
-    };
+    } else {
+        echo "couldnt generate Calendar";
+    }
     echo $calendar->display(date('Y-01-01'));
 };
