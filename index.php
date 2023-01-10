@@ -2,9 +2,9 @@
 require 'vendor/autoload.php';
 require 'functions.php';
 require 'hotelFunctions.php';
-//the narrow haven
 
-/* $transferCode = '4a0dbf4c-c585-4d75-a9cf-b991f6ff74cc'; */
+session_start();
+
 
 
 
@@ -14,9 +14,9 @@ use benhall14\phpCalendar\Calendar as Calendar;
 <?php
 
 $db = new PDO('sqlite:pelago.db');
-$smt = $db->prepare('SELECT * FROM rooms');
+/* $smt = $db->prepare('SELECT * FROM rooms');
 $smt->execute();
-$data = $smt->fetchAll();
+$data = $smt->fetchAll(); */
 
 if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['submit'] /* $_POST['breakfast'], $_POST['ocean-view'], $_POST['room-service'], $_POST['options'] */)) {
     $firstName = trim(htmlspecialchars($_POST['first-name']));
@@ -29,97 +29,44 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
     $transferCode = $_POST['transfer-code'];
 
 
-    foreach ($data as $price) {
-        $amount = $price['price'];
-
-        /* echo $amount; */
-    }
-
-    switch ($amount) {
-        case 'budget':
-            $amount = 5;
-            break;
-        case 'standard':
-            $amount = 10;
-            break;
-        case 'luxury':
-            $amount = 10;
-            break;
-    }
-
-    if (!empty($_POST['room-options'])) {
-        $selected = $_POST['room-options'];
+    $_SESSION['arrival'] = $arrival;
+    $_SESSION['departure'] = $departure;
+    $_SESSION['totalCost'] = $totalCost;
 
 
-        $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, arrival_date, departure_date, room_add_ons, total_price) VALUES (:first_name, :last_name, :room_type, :mail, :arrival_date, :departure_date, :room_add_ons, :total_price)';
+    if (preventDoubleBooking($arrival, $departure)) {
 
-        $statement = $db->prepare($query);
 
-        $statement->bindParam(':first_name', $firstName, PDO::PARAM_STR);
-        $statement->bindParam(':last_name', $lastName, PDO::PARAM_STR);
-        $statement->bindParam(':mail', $email, PDO::PARAM_STR);
-        $statement->bindParam(':room_type', $selected, PDO::PARAM_STR);
-        $statement->bindParam(':arrival_date', $arrival, PDO::PARAM_STR);
-        $statement->bindParam(':departure_date', $departure, PDO::PARAM_STR);
-        $statement->bindParam(':room_add_ons', $options, PDO::PARAM_STR);
-        $statement->bindParam(':total_price', $totalCost, PDO::PARAM_STR);
-        /*         $statement->bindParam(':ocean_view', $options, PDO::PARAM_STR);
-        $statement->bindParam(':room_service', $options, PDO::PARAM_STR); */
+        if (!empty($_POST['room-options'])) {
+            $selected = $_POST['room-options'];
 
-        $statement->execute();
 
-        /*         switch ($selected) {
-            case 'Budget':
-                $budget = 3;
-                break;
-            case 'Standard':
-                $standard = 5;
-                break;
-            case 'Luxury':
-                $luxury = 50;
-                break;
+            $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, arrival_date, departure_date, room_add_ons, total_price) VALUES (:first_name, :last_name, :room_type, :mail, :arrival_date, :departure_date, :room_add_ons, :total_price)';
+
+            $statement = $db->prepare($query);
+
+            $statement->bindParam(':first_name', $firstName, PDO::PARAM_STR);
+            $statement->bindParam(':last_name', $lastName, PDO::PARAM_STR);
+            $statement->bindParam(':mail', $email, PDO::PARAM_STR);
+            $statement->bindParam(':room_type', $selected, PDO::PARAM_STR);
+            $statement->bindParam(':arrival_date', $arrival, PDO::PARAM_STR);
+            $statement->bindParam(':departure_date', $departure, PDO::PARAM_STR);
+            $statement->bindParam(':room_add_ons', $options, PDO::PARAM_STR);
+            $statement->bindParam(':total_price', $totalCost, PDO::PARAM_INT);
+
+            $statement->execute();
         }
 
-        switch ($options) {
-            case 'breakfast':
-                $breakfast = 5;
-                break;
-            case 'ocean-view':
-                $oceanView = 10;
-                break;
-            case 'room-service':
-                $roomService = 15;
-                break;
-        } */
-
-
-
-        /* echo calcPrice($selected, $options); */
-    }
+        // jsonReceipt($arrival, $departure, $totalCost);
+        header('Location: receipt.php');
+    };
 
     checkTransferCode($transferCode, $totalCost);
     addFunds($transferCode);
+
     /* addBookinToLogBook($arrival, $departure, $totalCost); */
 }
 
-
-/* if (isset($_POST['submit'])) {
-    if (!empty($_POST['room-options'])) {
-        $selected = $_POST['room-options'];
-        echo 'you have chosen' . $selected;
-    } else {
-        echo 'something went wrong there buddy!';
-    }
-} */
-
-
-/* $cost = $db->prepare('SELECT * FROM rooms');
-$cost->execute();
-$dbData = $cost->fetchAll();
-
-foreach ($dbData as $roomPrice) {
-    echo $roomPrice['room_choice'] . " " . $roomPrice['price'];
-} */
 
 
 ?>
@@ -166,19 +113,16 @@ foreach ($dbData as $roomPrice) {
                     <p>
                         Budget 5$
                     </p>
-                    <!-- <img src="images/budget.jpg" alt=""> -->
                 </div>
                 <div class="grid-item standard">
                     <p>
                         Standard 10$
                     </p>
-                    <!-- <img src="images/standard.jpg" alt=""> -->
                 </div>
                 <div class="grid-item luxury">
                     <p>
                         Luxury 15$
                     </p>
-                    <!--  <img src="images/luxury.jpg" alt=""> -->
                 </div>
             </div>
         </section>
@@ -186,35 +130,12 @@ foreach ($dbData as $roomPrice) {
         <section class="budget-section">
             <h2>budget Room</h2>
             <?php
-
             showBookings('budget');
-            /*             $calendar = new calendar;
-            $calendar->stylesheet(); */
-
-            /* if (isset($_POST['submit'])) {
-                $start = trim(htmlspecialchars($_POST['arrival-date']));
-                $end = trim(htmlspecialchars($_POST['departure-date']));
-
-                $events = array();
-                $events[] = array(
-                    'start' => "{$start}",
-                    'end' => "{$end}",
-                    'mask' => true
-                );
-
-                $calendar->addEvents($events);
-            } */
-
-            /* echo $calendar->draw(date('Y-01-01')); */
-
             ?>
         </section>
 
         <section class="standard-section">
             <h2>Standard Room</h2>
-            <?php
-            /* echo $calendar->draw(date('Y-01-01')); */
-            ?>
             <?php
             showBookings('standard');
             ?>
@@ -223,7 +144,6 @@ foreach ($dbData as $roomPrice) {
         <section class="luxury-section">
             <h2>Luxury Room</h2>
             <?php
-            /* echo $calendar->draw(date('Y-01-01')); */
             showBookings('luxury');
             ?>
 
@@ -246,11 +166,6 @@ foreach ($dbData as $roomPrice) {
                                 <option value="budget">budget</option>
                                 <option value="standard">standard</option>
                                 <option value="luxury">luxury</option>
-
-
-                                <!--                                 <option value="Budget">Budget</option>
-                                <option value="Standard">Standard</option>
-                                <option value="Luxury">luxury</option> -->
                             </select>
                         </div>
                     </div>
@@ -283,7 +198,6 @@ foreach ($dbData as $roomPrice) {
                         <input name="calculated-cost" id="total-amount" type="text" readonly>
                     </div>
                     <button type="submit" name="submit">Choose options</button>
-                    <!--                     <input type="submit" name="submit" value="choose options"> -->
                 </form>
             </div>
         </section>
