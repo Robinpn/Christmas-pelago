@@ -5,18 +5,12 @@ require 'hotelFunctions.php';
 
 session_start();
 
-
-
-
 use benhall14\phpCalendar\Calendar as Calendar;
 ?>
 
 <?php
 
 $db = new PDO('sqlite:pelago.db');
-/* $smt = $db->prepare('SELECT * FROM rooms');
-$smt->execute();
-$data = $smt->fetchAll(); */
 
 if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['submit'] /* $_POST['breakfast'], $_POST['ocean-view'], $_POST['room-service'], $_POST['options'] */)) {
     $firstName = trim(htmlspecialchars($_POST['first-name']));
@@ -34,34 +28,37 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
     $_SESSION['totalCost'] = $totalCost;
 
 
-    if (preventDoubleBooking($arrival, $departure)) {
+    if (checkTransferCode($transferCode, $totalCost)) {
+
+        if (preventDoubleBooking($arrival, $departure)) {
 
 
-        if (!empty($_POST['room-options'])) {
-            $selected = $_POST['room-options'];
+            if (!empty($_POST['room-options'])) {
+                $selected = $_POST['room-options'];
 
 
-            $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, arrival_date, departure_date, room_add_ons, total_price) VALUES (:first_name, :last_name, :room_type, :mail, :arrival_date, :departure_date, :room_add_ons, :total_price)';
+                $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, arrival_date, departure_date, room_add_ons, total_price) VALUES (:first_name, :last_name, :room_type, :mail, :arrival_date, :departure_date, :room_add_ons, :total_price)';
 
-            $statement = $db->prepare($query);
+                $statement = $db->prepare($query);
 
-            $statement->bindParam(':first_name', $firstName, PDO::PARAM_STR);
-            $statement->bindParam(':last_name', $lastName, PDO::PARAM_STR);
-            $statement->bindParam(':mail', $email, PDO::PARAM_STR);
-            $statement->bindParam(':room_type', $selected, PDO::PARAM_STR);
-            $statement->bindParam(':arrival_date', $arrival, PDO::PARAM_STR);
-            $statement->bindParam(':departure_date', $departure, PDO::PARAM_STR);
-            $statement->bindParam(':room_add_ons', $options, PDO::PARAM_STR);
-            $statement->bindParam(':total_price', $totalCost, PDO::PARAM_INT);
+                $statement->bindParam(':first_name', $firstName, PDO::PARAM_STR);
+                $statement->bindParam(':last_name', $lastName, PDO::PARAM_STR);
+                $statement->bindParam(':mail', $email, PDO::PARAM_STR);
+                $statement->bindParam(':room_type', $selected, PDO::PARAM_STR);
+                $statement->bindParam(':arrival_date', $arrival, PDO::PARAM_STR);
+                $statement->bindParam(':departure_date', $departure, PDO::PARAM_STR);
+                $statement->bindParam(':room_add_ons', $options, PDO::PARAM_STR);
+                $statement->bindParam(':total_price', $totalCost, PDO::PARAM_INT);
 
-            $statement->execute();
-        }
+                $statement->execute();
+            }
 
-        // jsonReceipt($arrival, $departure, $totalCost);
-        header('Location: receipt.php');
+            // jsonReceipt($arrival, $departure, $totalCost);
+            header('Location: receipt.php');
+        };
     };
 
-    checkTransferCode($transferCode, $totalCost);
+
     addFunds($transferCode);
 
     /* addBookinToLogBook($arrival, $departure, $totalCost); */

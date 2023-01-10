@@ -66,6 +66,7 @@ function checkTransferCode($transferCode, $totalCost)
 {
     if (!isValidUuid($transferCode)) {
         echo "Not a valid Code!";
+        return false;
     } else {
 
 

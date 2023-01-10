@@ -27,9 +27,9 @@ const totalPrice = () => {
       roomCost = 0;
   }
   if (amountOfDays >= 1) {
-    totalAmount.value = roomCost * amountOfDays;
+    totalAmount.value = roomCost * amountOfDays + '$';
   } else {
-    totalAmount.value = 0;
+    totalAmount.value = 0 + '$';
   }
 };
 
