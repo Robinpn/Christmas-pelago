@@ -16,23 +16,20 @@ const totalPrice = () => {
   switch (room) {
     case 'budget':
       roomCost = 5;
-      console.log(roomCost);
       break;
     case 'standard':
       roomCost = 10;
-      console.log(roomCost);
       break;
     case 'luxury':
       roomCost = 15;
-      console.log(roomCost);
       break;
     default:
       roomCost = 0;
   }
-  if (amountOfDays > 1) {
-    totalAmount.value = roomCost * amountOfDays + '$';
+  if (amountOfDays >= 1) {
+    totalAmount.value = roomCost * amountOfDays;
   } else {
-    totalAmount.value = 0 + '$';
+    totalAmount.value = 0;
   }
 };
 

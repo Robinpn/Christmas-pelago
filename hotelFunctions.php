@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require 'db.php';
+/* require 'db.php'; */
 require 'vendor/autoload.php';
 
 use benhall14\phpCalendar\Calendar;
@@ -109,24 +109,6 @@ function addFunds($transferCode)
     }
 };
 
-/* function addBookinToLogBook($arrival, $departure, $totalCost)
-{
-    $content = [
-
-        'Island' => 'The Narrow Haven',
-        'Hotel' => 'The Narrow Haven Resort',
-        'Arrival_date' => $arrival,
-        'Departure_date' => $departure,
-        'Total_cost' => $totalCost,
-        'Stars' => '1',
-        'Features' => '',
-        'Additional_info' => ''
-    ];
-
-    $path = '/logbook.json';
-
-    file_put_contents(__DIR__ . $path, json_encode($content), FILE_APPEND);
-}; */
 
 function showBookings($roomChoice)
 {
@@ -156,13 +138,81 @@ function showBookings($roomChoice)
         $response = $db->query('SELECT arrival_date, departure_date FROM Visitors WHERE room_type = "luxury"');
         $response->execute();
         $result = $response->fetchAll();
+
         foreach ($result as $resp) {
             $arrivalDate = $resp['arrival_date'];
             $departureDate = $resp['departure_date'];
             $calendar->addEvent($arrivalDate, $departureDate, '', true);
         }
-    } else {
-        echo "couldnt generate Calendar";
     }
     echo $calendar->display(date('Y-01-01'));
 };
+
+
+
+
+function preventDoubleBooking($arrival, $departure)
+{
+    $userArrivalDate = $arrival;
+    $userDepartureDate = $departure;
+    $roomOption = $_POST['room-options'];
+
+    $db = new PDO('sqlite:pelago.db');
+
+
+
+    $userPeriod = new DatePeriod(
+        new DateTime($userArrivalDate),
+        new DateInterval('P1D'),
+        new DateTime($userDepartureDate)
+    );
+
+    $response = ('SELECT arrival_date, departure_date FROM Visitors WHERE room_type IS :room_type');
+    $statement = $db->prepare($response);
+    $statement->bindValue(':room_type', $roomOption);
+    $statement->execute();
+    $res = $statement->fetchAll();
+
+
+    foreach ($res as $booking) {
+        $bookedPeriod = new DatePeriod(
+            new DateTime($booking['arrival_date']),
+            new DateInterval('P1D'),
+            new DateTime($booking['departure_date'])
+        );
+
+        foreach ($bookedPeriod as $key => $bookedDate) {
+            foreach ($userPeriod as $key => $userDate) {
+                if ($userDate == $bookedDate) {
+                    echo "Room is already Booked, please try another date";
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+// function jsonReceipt($arrival, $departure, $totalCost)
+// {
+//     $content = [
+
+//         'Island' => 'The Narrow Haven',
+//         'Hotel' => 'The Narrow Haven Resort',
+//         'Arrival_date' => $arrival,
+//         'Departure_date' => $departure,
+//         'Total_cost' => $totalCost,
+//         'Stars' => '1',
+//         'Features' => '',
+//         'Additional_info' => ''
+//     ];
+
+
+//     echo json_encode($content);
+
+//     header('content-type: application/json');
+
+//     /* $path = '/logbook.json';
+
+//     file_put_contents(__DIR__ . $path, json_encode($content), FILE_APPEND); */
+// };
