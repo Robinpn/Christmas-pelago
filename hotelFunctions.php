@@ -69,21 +69,30 @@ function checkTransferCode($transferCode, $totalCost)
         return false;
     } else {
 
+        if ($totalCost < $transferCode) {
+            echo "Sorry to poor!";
+            return false;
+        } else {
 
-        $client = new \GuzzleHttp\Client();
-        $options = [
-            'form_params' => [
-                'transferCode' => $transferCode,
-                'totalCost' => $totalCost
-            ]
-        ];
 
-        try {
-            $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', $options);
-            $response = $response->getBody()->getContents();
-            $response = json_decode($response, true);
-        } catch (\Exception $e) {
-            return "something went wrong!" . $e;
+
+
+            $client = new \GuzzleHttp\Client();
+            $options = [
+                'form_params' => [
+                    'transferCode' => $transferCode,
+                    'totalCost' => $totalCost
+                ]
+            ];
+
+            try {
+                $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', $options);
+                $response = $response->getBody()->getContents();
+                $response = json_decode($response, true);
+            } catch (\Exception $e) {
+                return "something went wrong!" . $e;
+            }
+            return true;
         }
     }
     return true;
