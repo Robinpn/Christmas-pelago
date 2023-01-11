@@ -15,13 +15,13 @@ const totalPrice = () => {
   let roomCost;
   switch (room) {
     case 'budget':
-      roomCost = 5;
+      roomCost = 2;
       break;
     case 'standard':
-      roomCost = 10;
+      roomCost = 4;
       break;
     case 'luxury':
-      roomCost = 15;
+      roomCost = 8;
       break;
     default:
       roomCost = 0;

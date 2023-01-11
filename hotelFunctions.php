@@ -86,8 +86,10 @@ function checkTransferCode($transferCode, $totalCost)
             return "something went wrong!" . $e;
         }
 
+
+
         if (!array_key_exists("amount", $response) || $totalCost > $response["amount"]) {
-            echo "Sorry not enough money";
+            echo "not enough money!";
             return false;
         } else {
             echo " You got enough money";

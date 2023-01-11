@@ -19,7 +19,7 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
     $options = implode(',', $_POST['options']);
     $arrival = trim(htmlspecialchars($_POST['arrival-date']));
     $departure = trim(htmlspecialchars($_POST['departure-date']));
-    $totalCost = $_POST['calculated-cost'];
+    $totalCost = (int)$_POST['calculated-cost'];
     $transferCode = $_POST['transfer-code'];
 
 
@@ -98,10 +98,10 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
                 About hotel
             </h2>
             <p>
-                Welcome to our lovely Hotel!. We are a small family run hotel that focuses on the island experience more that the price of our hotel.
+                Welcome to our lovely Hotel!. We are a small family run hotel that focuses on the island experience more that the price of our living.
                 We realised quickly that people are more interested in all the amazing experiences there are on these islands, more that a fancy hotel.
                 Therefore we created a cheap hotel that allows you to spend you hard earn money on diffierent adventures, whilst still giving you a
-                reasonable hotel visit. We hope you thoroughly enjoy your stay with us, and get the island vacation of your dream!
+                reasonable place to call home. We hope you thoroughly enjoy your stay with us, and get the island vacation of your dream!
             </p>
         </section>
 
