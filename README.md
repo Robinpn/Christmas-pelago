@@ -1,12 +1,8 @@
 WHY NOT A GIF HERE? TO SET THE MODE.
 
-# Island name
+# The Narrow Haven Isle
 
-The narrow Haven isle
-
-# Hotel name
-
-The narrow haven resort
+# The Narrow Haven Resort
 
 # Instructions
 

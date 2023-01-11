@@ -6,17 +6,14 @@ require 'hotelFunctions.php';
 session_start();
 
 use benhall14\phpCalendar\Calendar as Calendar;
-?>
-
-<?php
 
 $db = new PDO('sqlite:pelago.db');
 
-if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['submit'] /* $_POST['breakfast'], $_POST['ocean-view'], $_POST['room-service'], $_POST['options'] */)) {
+if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['submit'])) {
     $firstName = trim(htmlspecialchars($_POST['first-name']));
     $lastName = trim(htmlspecialchars($_POST['last-name']));
     $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-    $options = implode(',', $_POST['options']);
+    /* $options = implode(',', $_POST['options']); */
     $arrival = trim(htmlspecialchars($_POST['arrival-date']));
     $departure = trim(htmlspecialchars($_POST['departure-date']));
     $totalCost = (int)$_POST['calculated-cost'];
@@ -37,7 +34,7 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
                 $selected = $_POST['room-options'];
 
 
-                $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, arrival_date, departure_date, room_add_ons, total_price) VALUES (:first_name, :last_name, :room_type, :mail, :arrival_date, :departure_date, :room_add_ons, :total_price)';
+                $query = 'INSERT INTO Visitors (first_name, last_name, room_type, mail, arrival_date, departure_date, total_price) VALUES (:first_name, :last_name, :room_type, :mail, :arrival_date, :departure_date, :total_price)';
 
                 $statement = $db->prepare($query);
 
@@ -47,24 +44,17 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
                 $statement->bindParam(':room_type', $selected, PDO::PARAM_STR);
                 $statement->bindParam(':arrival_date', $arrival, PDO::PARAM_STR);
                 $statement->bindParam(':departure_date', $departure, PDO::PARAM_STR);
-                $statement->bindParam(':room_add_ons', $options, PDO::PARAM_STR);
                 $statement->bindParam(':total_price', $totalCost, PDO::PARAM_INT);
 
                 $statement->execute();
             }
-
-            // jsonReceipt($arrival, $departure, $totalCost);
-            header('Location: receipt.php');
+            header('Location: /receipt/receipt.php/');
         };
     };
 
 
     addFunds($transferCode);
-
-    /* addBookinToLogBook($arrival, $departure, $totalCost); */
 }
-
-
 
 ?>
 
@@ -98,9 +88,9 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
                 About hotel
             </h2>
             <p>
-                Welcome to our lovely Hotel!. We are a small family run hotel that focuses on the island experience more that the price of our living.
-                We realised quickly that people are more interested in all the amazing experiences there are on these islands, more that a fancy hotel.
-                Therefore we created a cheap hotel that allows you to spend you hard earn money on diffierent adventures, whilst still giving you a
+                Welcome to our lovely Hotel!. We are a small family run hotel that focuses on the island experience more that the price of our facility.
+                We realized quickly that people are more interested in all the amazing experiences there are on these islands, more than that of a fancy hotel.
+                Therefore we created a cheap hotel that allows you to spend you hard earn money on different adventures, whilst still giving you a
                 reasonable place to call home. We hope you thoroughly enjoy your stay with us, and get the island vacation of your dream!
             </p>
         </section>
@@ -169,23 +159,6 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
                     </div>
                     <input type="date" name="arrival-date" id="arrival_date" min="2023-01-01" max="2023-01-31">
                     <input type="date" name="departure-date" id="departure_date" min="2023-01-01" max="2023-01-31">
-
-                    <div class="checkbox-container">
-                        <div>
-                            <input type="checkbox" name="options[]" value="breakfast">
-                            <label for="breakfast">breakfast</label>
-                        </div>
-
-                        <div>
-                            <input type="checkbox" name="options[]" value="ocean-view">
-                            <label for="ocean-view">ocean-view</label>
-                        </div>
-
-                        <div>
-                            <input type="checkbox" name="options[]" value="room-service">
-                            <label for="room-service">room-service</label>
-                        </div>
-                    </div>
 
                     <div id="transfer-code-container">
                         <input type="text" name="transfer-code" placeholder="transfer code">

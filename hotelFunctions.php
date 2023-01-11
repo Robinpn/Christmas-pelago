@@ -92,7 +92,6 @@ function checkTransferCode($transferCode, $totalCost)
             echo "not enough money!";
             return false;
         } else {
-            echo " You got enough money";
             return true;
         }
     }

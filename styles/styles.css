@@ -8,7 +8,7 @@ body {
   height: 100%;
   display: flex;
   justify-content: center;
-  background-image: url('/images/tropical-bg.jpg');
+  background-image: url('/pelago/images/tropical-bg.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -39,7 +39,7 @@ header {
   height: 200px;
   background-image: linear-gradient(to right, purple, blue);
   text-align: center;
-  background-image: url('/images/tropical-header.jpg');
+  background-image: url('/pelago/images/tropical-header.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -70,20 +70,20 @@ header {
 }
 
 .budget {
-  background-image: url('/images/budget.jpg');
+  background-image: url('/pelago/images/budget.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .standard {
-  background-image: url('/images/standard.jpg');
+  background-image: url('/pelago/images/standard.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 .luxury {
-  background-image: url('/images/luxury.jpg');
+  background-image: url('/pelago/images/luxury.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
