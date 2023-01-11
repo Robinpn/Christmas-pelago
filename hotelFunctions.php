@@ -86,16 +86,6 @@ function checkTransferCode($transferCode, $totalCost)
             return "something went wrong!" . $e;
         }
 
-
-
-        /* if ($totalCost > $response['totalCost']) {
-            echo "Sorry to poor!";
-            return false;
-        } else {
-            echo "booking successfull";
-            return true;
-        } */
-
         if (!array_key_exists("amount", $response) || $totalCost > $response["amount"]) {
             echo "Sorry not enough money";
             return false;

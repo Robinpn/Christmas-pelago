@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-/* require __DIR__ . 'hotelFunctions.php'; */
 session_start();
 
 
@@ -23,7 +22,3 @@ $receipt = json_encode($content);
 
 header('content-type: application/json');
 echo $receipt;
-
-    /* $path = '/logbook.json';
-
-    file_put_contents(__DIR__ . $path, json_encode($content), FILE_APPEND); */

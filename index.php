@@ -98,9 +98,10 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
                 About hotel
             </h2>
             <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla laborum iste assumenda aspernatur ratione nihil eos explicabo saepe temporibus fugiat molestiae commodi, consequuntur numquam dolores praesentium architecto corrupti rem. Nulla?
-                Doloremque inventore dolores pariatur cumque, porro exercitationem! Cumque harum praesentium animi optio veritatis aperiam temporibus soluta? Ullam possimus quasi eum in necessitatibus praesentium, est cupiditate modi voluptatem, vitae reprehenderit ipsa.
-                Doloribus obcaecati voluptas necessitatibus modi, molestiae accusantium perferendis sed saepe in est accusamus nobis iusto iure, animi quibusdam assumenda unde blanditiis, nisi eveniet beatae culpa itaque! Deleniti modi officia sed?
+                Welcome to our lovely Hotel!. We are a small family run hotel that focuses on the island experience more that the price of our hotel.
+                We realised quickly that people are more interested in all the amazing experiences there are on these islands, more that a fancy hotel.
+                Therefore we created a cheap hotel that allows you to spend you hard earn money on diffierent adventures, whilst still giving you a
+                reasonable hotel visit. We hope you thoroughly enjoy your stay with us, and get the island vacation of your dream!
             </p>
         </section>
 
