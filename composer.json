@@ -1,6 +1,6 @@
 {
   "require": {
     "benhall14/php-calendar": "^1.4",
-    "guzzlehttp/guzzle": "^7.0"
+    "guzzlehttp/guzzle": "^7.5"
   }
 }
