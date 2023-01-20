@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-image: url(../images/tropical-bg.jpg);
+  gap: 20px;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: aqua;
+  width: 64.5%;
+  border: 2px solid hotpink;
+  border-radius: 10px;
+}
+.card-container li {
+  font-size: 20px;
+}
+
+.card-container h3 {
+  font-size: 30px;
+}
+.card-container h4 {
+  font-size: 26px;
+}
+
+.text-container {
+  text-align: left;
+  width: 45%;
+}
+
+header {
+  width: 64.5%;
+  height: 200px;
+  background-image: linear-gradient(to right, purple, blue);
+  text-align: center;
+  background-image: url('/images/tropical-header.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 2px solid hotpink;
+}
+
+header h1 {
+  padding-top: 0px;
+  margin-top: 0px;
+  color: white;
+}
+
+h2 {
+  background-color: #607a9f;
+  border: 2px solid hotpink;
+  border-radius: 10px;
+  width: 64.5%;
+  text-align: center;
+  padding: 10px;
+}
