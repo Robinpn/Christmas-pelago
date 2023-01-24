@@ -1,5 +1,7 @@
 <?php
 
+require "dbData.php";
+
 $logbookData = json_decode(file_get_contents(__DIR__ . '/logbook.json'), true);
 
 
@@ -36,20 +38,32 @@ $logbookData = json_decode(file_get_contents(__DIR__ . '/logbook.json'), true);
                 <div class="text-container">
                     <h3>Hotel: <?= $stay['hotel'] ?></h3>
                     <h4>Island: <?= $stay['island'] ?></h4>
-                    <li>Stars: <?= $stay['stars'] ?></li>
-                    <li>Arrival date: <?= $stay['arrival_date'] ?></li>
-                    <li>Departure date: <?= $stay['departure_date'] ?></li>
-                    <li>
-                        Features:
-                        <?php foreach ($stay['features'] as $feature) : ?>
-                            <?= $feature['name'] . " "; ?>
-                        <?php endforeach ?>
-                    </li>
-                    <li>Total cost: <?= $stay['total_cost'] . "$"; ?></li>
+                    <ul>
+                        <li>Stars: <?= $stay['stars'] ?></li>
+                        <li>Arrival date: <?= $stay['arrival_date'] ?></li>
+                        <li>Departure date: <?= $stay['departure_date'] ?></li>
+                        <li>
+                            Features:
+                            <?php foreach ($stay['features'] as $feature) : ?>
+                                <?= $feature['name'] . " "; ?>
+                            <?php endforeach ?>
+                        </li>
+                        <li>Total cost: <?= $stay['total_cost'] . "$"; ?></li>
+                    </ul>
                 </div>
             </div>
         <?php endforeach; ?>
-        <h2>Summary of the hotels revenue for January 2023, aswell as most popular feature and average revenue per booking:</h2>
+        <h2>Hotel statistics, January 2023:</h2>
+        <div class="card-container">
+            <div class="text-container">
+                <ul>
+                    <li>Total revenue: <?= $totalRevenue ?></li>
+                    <li>Total amount of bookings: <?= $amountOfBookings ?></li>
+                    <li>Avarage revenue per booking: <?= $avarageRev ?></li>
+                </ul>
+            </div>
+        </div>
+
 
 </body>
 

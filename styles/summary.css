@@ -10,6 +10,9 @@ body {
   flex-direction: column;
   background-image: url(../images/tropical-bg.jpg);
   gap: 20px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .card-container {
@@ -35,6 +38,10 @@ body {
 
 .text-container {
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 45%;
 }
 
