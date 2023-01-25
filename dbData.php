@@ -20,9 +20,9 @@ foreach ($visitors as $visitor) {
 
 //calculating the total revenue of the hotel.
 $totalRevenue = array_sum($payments);
+
 //calculating the average revenue per booking. 
 $avarageRev = $totalRevenue / count($payments);
+
 //calculating amount of bookings.
 $amountOfBookings = count($payments);
-
-// echo "amnt of bookings: " . count($visitors);

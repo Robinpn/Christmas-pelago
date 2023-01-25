@@ -71,3 +71,8 @@ h2 {
   text-align: center;
   padding: 10px;
 }
+
+button {
+  width: 64.5%;
+  margin-bottom: 20px;
+}

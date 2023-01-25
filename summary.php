@@ -35,9 +35,9 @@ $logbookData = json_decode(file_get_contents(__DIR__ . '/logbook.json'), true);
     <h2>Summary of all the bookings in logbook: </h1>
         <?php foreach ($logbookData['vacation'] as $stay) : ?>
             <div class="card-container">
+                <h3>Hotel: <?= $stay['hotel'] ?></h3>
+                <h4>Island: <?= $stay['island'] ?></h4>
                 <div class="text-container">
-                    <h3>Hotel: <?= $stay['hotel'] ?></h3>
-                    <h4>Island: <?= $stay['island'] ?></h4>
                     <ul>
                         <li>Stars: <?= $stay['stars'] ?></li>
                         <li>Arrival date: <?= $stay['arrival_date'] ?></li>
@@ -55,6 +55,8 @@ $logbookData = json_decode(file_get_contents(__DIR__ . '/logbook.json'), true);
         <?php endforeach; ?>
         <h2>Hotel statistics, January 2023:</h2>
         <div class="card-container">
+            <h3>Hotel: The Narrow Haven Resort</h3>
+            <h4>Island: The Narrow Haven</h4>
             <div class="text-container">
                 <ul>
                     <li>Total revenue: <?= $totalRevenue ?></li>
@@ -63,6 +65,8 @@ $logbookData = json_decode(file_get_contents(__DIR__ . '/logbook.json'), true);
                 </ul>
             </div>
         </div>
+
+        <button><a href="index.php">Back to Startpage</a></button>
 
 
 </body>
