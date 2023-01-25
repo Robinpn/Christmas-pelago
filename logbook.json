@@ -24,7 +24,17 @@
           "video": "https://www.youtube.com/watch?v=5Ym-k30X5PY"
         }
       ]
+    },
+    {
+      "island": "Albero",
+      "hotel": "Tree-hotel",
+      "f_name": "Rune",
+      "l_name": "Runesson",
+      "arrival_date": "2023-01-16",
+      "departure_date": "2023-01-19",
+      "total_cost": 9,
+      "stars": "1",
+      "features": []
     }
   ]
 }
-{"Island":"The Narrow Haven","Hotel":"The Narrow Haven Resort","Arrival_date":"2023-01-09","Departure_date":"2023-01-12","Total_cost":"30$","Stars":"1","Features":"","Additional_info":""}

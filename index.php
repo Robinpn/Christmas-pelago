@@ -169,9 +169,13 @@ if (isset($_POST['first-name'], $_POST['last-name'], $_POST['email'], $_POST['su
                         <input name="calculated-cost" id="total-amount" type="text" readonly>
                     </div>
                     <button type="submit" name="submit">Choose options</button>
+                    <button><a href="summary.php">Hotel Statistics</a></button>
                 </form>
             </div>
+
         </section>
+
+
 
         <footer></footer>
     </div>
